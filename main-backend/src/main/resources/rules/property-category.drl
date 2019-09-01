@@ -1,0 +1,78 @@
+package rules;
+dialect  "mvel"
+
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
+import com.xml.megatravel.model.*
+import com.xml.megatravel.model.enumeration.*
+
+rule "Bronze accommodation category"
+    when
+        $a: Property(category == Category.NONE)
+        $r: Reservation(property = $a, rating == null) or Reservation(property = $a, rating.overallRatinng > 2)
+    then
+        modify($a) {
+            setCategory(Category.BRONZE)
+        }
+end
+
+rule "Silver accommodation category"
+    when
+        $now: LocalDate()
+        $a: Property($reservations: reservations, category == Category.NONE)
+        $numberOfReservations: Number(intValue >= 3)
+            from accumulate(
+                Reservation($d: ChronoUnit.DAYS.between(startDate.toLocalDate(), $now) < 90) from $a.reservations,
+                count($d)
+            )
+        $overallRating: Number(intValue > 2)
+                    from accumulate(
+                        $i: Reservation() from $a.reservations,
+                        average($i.rating.overallRating)
+                    )
+    then
+        modify($a) {
+            setCategory(Category.SILVER)
+        }
+end
+
+rule "Gold accommodation category"
+    when
+        $now: LocalDate()
+        $a: Property($reservations: reservations, category == Category.NONE)
+        $numberOfReservations: Number(intValue >= 2)
+            from accumulate(
+                $i: Reservation(rating.overallRating > 4, $d: ChronoUnit.DAYS.between(startDate.toLocalDate(), $now) < 30) from $a.reservations,
+                count($i)
+            )
+        $overallRating: Number(intValue > 3)
+            from accumulate(
+                $i: Reservation() from $a.reservations,
+                average($i.rating.overallRating)
+            )
+    then
+        modify($a) {
+            setCategory(Category.GOLD)
+        }
+end
+
+rule "Platinum accommodation category"
+    when
+        $now: LocalDate()
+        $a: Property($reservations: reservations, category == Category.GOLD)
+        $earnedMoney: Number(intValue >= 1000)
+            from accumulate(
+                Reservation($p: price, $d: ChronoUnit.DAYS.between(startDate.toLocalDate(), $now) < 90) from $a.reservations,
+                sum($p)
+            )
+        $overallRating: Number(intValue > 3)
+            from accumulate(
+                $i: Reservation() from $a.reservations,
+                average($i.rating.overallRating)
+            )
+    then
+        modify($a) {
+            setCategory(Category.PLATINUM)
+        }
+end
+

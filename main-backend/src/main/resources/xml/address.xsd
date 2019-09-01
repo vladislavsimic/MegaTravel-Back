@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
+    targetNamespace="http://www.xml.com/megatravel/soap/model/address"
+    xmlns:b="http://www.xml.com/megatravel/soap/model/base">
+    <xs:import namespace="http://www.xml.com/megatravel/soap/model/base" schemaLocation="base.xsd"/>
+
+    <xs:complexType name="XmlAddress">
+        <xs:complexContent>
+            <xs:extension base="b:XmlBase">
+                <xs:sequence>
+                    <xs:element name="street">
+                        <xs:simpleType>
+                            <xs:restriction base="xs:string">
+                                <xs:minLength value="0"/>
+                                <xs:maxLength value="512"/>
+                            </xs:restriction>
+                        </xs:simpleType>
+                    </xs:element>
+                    <xs:element name="city">
+                        <xs:simpleType>
+                            <xs:restriction base="xs:string">
+                                <xs:minLength value="0"/>
+                                <xs:maxLength value="128"/>
+                            </xs:restriction>
+                        </xs:simpleType>
+                    </xs:element>
+                    <xs:element name="country">
+                        <xs:simpleType>
+                            <xs:restriction base="xs:string">
+                                <xs:minLength value="0"/>
+                                <xs:maxLength value="128"/>
+                            </xs:restriction>
+                        </xs:simpleType>
+                    </xs:element>
+                    <xs:element default="0" name="longitude" type="xs:double"/>
+                    <xs:element name="latitude" default="0" type="xs:double"/>
+
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+</xs:schema>

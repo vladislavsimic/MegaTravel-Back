@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
+    targetNamespace="http://www.xml.com/megatravel/soap/model/rating"
+    xmlns:b="http://www.xml.com/megatravel/soap/model/base"
+    xmlns:res="http://www.xml.com/megatravel/soap/model/reservation">
+
+    <xs:import namespace="http://www.xml.com/megatravel/soap/model/base" schemaLocation="base.xsd"/>
+    <xs:import namespace="http://www.xml.com/megatravel/soap/model/reservation" schemaLocation="reservation.xsd"/>
+
+    <xs:complexType name="XmlRating">
+        <xs:complexContent>
+            <xs:extension base="b:XmlBase">
+                <xs:sequence>
+                    <xs:element name="reservation" type="res:XmlReservation"/>
+                    <xs:element name="overallRating" type="xs:int"/>
+                    <xs:element name="staffRating" type="xs:int"/>
+                    <xs:element name="servicesRating" type="xs:int"/>
+                    <xs:element name="comment">
+                        <xs:simpleType>
+                            <xs:restriction base="xs:string">
+                                <xs:maxLength value="1024"/>
+                            </xs:restriction>
+                        </xs:simpleType>
+                    </xs:element>
+                    <xs:element name="isCommentReviewed" type="xs:boolean"/>
+                    <xs:element name="isCommentApproved" type="xs:boolean"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+</xs:schema>

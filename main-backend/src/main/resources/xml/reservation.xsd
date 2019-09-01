@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
+    targetNamespace="http://www.xml.com/megatravel/soap/model/reservation"
+   xmlns:property="http://www.xml.com/megatravel/soap/model/property"
+   xmlns:res="http://www.xml.com/megatravel/soap/model/reservation"
+   xmlns:b="http://www.xml.com/megatravel/soap/model/base"
+   xmlns:rate="http://www.xml.com/megatravel/soap/model/rating"
+   xmlns:u="http://www.xml.com/megatravel/soap/model/user">
+    <xs:import namespace="http://www.xml.com/megatravel/soap/model/base" schemaLocation="base.xsd"/>
+    <xs:import namespace="http://www.xml.com/megatravel/soap/model/user" schemaLocation="user.xsd"/>
+    <xs:import namespace="http://www.xml.com/megatravel/soap/model/rating" schemaLocation="rating.xsd"/>
+    <xs:import namespace="http://www.xml.com/megatravel/soap/model/property" schemaLocation="property.xsd"/>
+
+    <xs:element name="createReservationRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element type="xs:string" name="propertyId"/>
+                <xs:element type="xs:date" name="startDate"/>
+                <xs:element type="xs:date" name="endDate"/>
+                <xs:element name="numberOfPeople" type="xs:int"/>
+                <xs:element name="price" type="xs:double"/>
+                <xs:element name="userId" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="createReservationResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="reservation" type="res:XmlReservation"/>
+                <xs:element name="status" type="xs:int"></xs:element>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="getReservationsResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="reservations" type="res:XmlReservation" maxOccurs="unbounded" minOccurs="0" />
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="getReservationsRequest">
+        <xs:complexType/>
+    </xs:element>
+
+    <xs:element name="updateReservationStatusRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="status" type="xs:string"/>
+                <xs:element name="reservation_id" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="updateReservationStatusResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="status_code" type="xs:int"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:complexType name="XmlReservation">
+        <xs:complexContent>
+            <xs:extension base="b:XmlBase">
+                <xs:sequence>
+                    <xs:element name="property" type="property:XmlProperty"/>
+                    <xs:element name="user" type="u:XmlUser"/>
+                    <xs:element name="rating" type="rate:XmlRating"/>
+                    <xs:element name="startDate" type="xs:date"/>
+                    <xs:element name="endDate" type="xs:date"/>
+                    <xs:element name="numberOfPeople" type="xs:int"/>
+                    <xs:element name="price" type="xs:double"/>
+                    <xs:element name="reservationStatus">
+                        <xs:simpleType>
+                            <xs:restriction base="xs:string">
+                                <xs:enumeration value="PENDING"/>
+                                <xs:enumeration value="SUCCESSFUL"/>
+                                <xs:enumeration value="CANCELED"/>
+                            </xs:restriction>
+                        </xs:simpleType>
+                    </xs:element>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+
+</xs:schema>

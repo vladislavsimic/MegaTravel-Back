@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
+    targetNamespace="http://www.xml.com/megatravel/soap/model/category"
+   xmlns:b="http://www.xml.com/megatravel/soap/model/base" >
+    <xs:import namespace="http://www.xml.com/megatravel/soap/model/base" schemaLocation="base.xsd"/>
+
+    <xs:complexType name="XmlCategory">
+        <xs:complexContent>
+            <xs:extension base="b:XmlBase">
+                <xs:sequence>
+                    <xs:element name="stars" type="xs:string"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+</xs:schema>

@@ -1,0 +1,74 @@
+package rules;
+dialect  "mvel"
+
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
+import com.xml.megatravel.model.enumeration.*;
+import com.xml.megatravel.model.*
+
+rule "Bronze client category"
+    when
+        $u: User(category == Category.NONE)
+    then
+        modify($u) {
+            setCategory(Category.BRONZE)
+        }
+end
+
+rule "Silver client category"
+    when
+        $now: LocalDate()
+        $r: Reservation()
+        $u: User($reservations: reservations, ChronoUnit.MONTHS.between(timeCreated.toLocalDate(), $now) > 6)
+        $numberOfReservations: Number(intValue >= 2)
+            from accumulate(
+                $i: Reservation(reservationStatus == ReservationStatus.SUCCESSFUL) from $reservations,
+                count($i)
+            )
+        $totalSpent: Number(intValue > 300)
+            from accumulate(
+                Reservation(reservationStatus == ReservationStatus.SUCCESSFUL, $price: price) from $reservations,
+                sum($price)
+            )
+    then
+        modify($u) {
+            setCategory(Category.SILVER)
+        }
+end
+
+rule "Gold client category"
+    when
+        $r: Reservation()
+        $a: Property()
+        $u: User($reservations: reservations)
+        $numberOfReservations: Number(intValue >= 10)
+            from accumulate(
+                $i: Reservation(reservationStatus == ReservationStatus.SUCCESSFUL) from $reservations,
+                count($i)
+            )
+        $totalGoldOrGreated: Number(intValue >= 1)
+            from accumulate(
+                $i: Reservation(user.id == $u.id, accommodation.category == Category.GOLD || accommodation.category == Category.PLATINUM) from $reservations,
+                count($i)
+            )
+    then
+        modify($u) {
+            setCategory(Category.GOLD)
+        }
+end
+
+rule "Platinum client category"
+    when
+        $now: LocalDate()
+        $r: Reservation()
+        $u: User($reservations: reservations)
+        $totalPrice12Months: Number(intValue > 2000)
+            from accumulate(
+                Reservation(ChronoUnit.MONTHS.between(startDate.toLocalDate(), $now) < 12, reservationStatus == ReservationStatus.SUCCESSFUL, $price: price) from $reservations,
+                sum($price)
+            )
+    then
+        modify($u) {
+            setCategory(Category.PLATINUM)
+        }
+end

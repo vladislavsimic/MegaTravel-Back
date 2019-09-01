@@ -1,0 +1,82 @@
+package rules;
+dialect  "mvel"
+import com.xml.megatravel.model.*
+import java.util.Date
+import com.xml.megatravel.model.enumeration.*
+import java.time.temporal.ChronoUnit;
+
+rule "Reservation cancel price based on prevoius seasons"
+    agenda-group "reservation cancel price"
+    salience 0
+    lock-on-active true
+
+    when
+        $reservation : Reservation()
+        Property($accRes : reservations)
+        Reservation(reservationStatus = ReservationStatus.SUCCESSFUL) from $accRes
+    then
+       modify($reservation) {
+            decreaseCancelReservationPrice(0.25)
+       }
+end
+
+rule "Reservation cancel price 3 days before start"
+    agenda-group "reservation cancel price"
+    salience 2
+    lock-on-active true
+
+    when
+        $now : Date()
+        $reservation : Reservation( ChronoUnit.DAYS.between(startDate.toLocalDate(), $now) <= 3 )
+    then
+       modify($reservation) {
+            decreaseCancelReservationPrice(0.5)
+       }
+end
+
+rule "Reservation cancel price 15 days before start"
+    agenda-group "reservation cancel price"
+    salience 1
+    lock-on-active true
+
+    when
+        $now : Date()
+        $reservation : Reservation( ChronoUnit.DAYS.between(startDate.toLocalDate(), $now) == 15 )
+    then
+       modify($reservation) {
+            decreaseCancelReservationPrice(0.3)
+       }
+end
+
+rule "Reservation cancel price 15 days before start and between reservations"
+    agenda-group "reservation cancel price"
+    salience 3
+    lock-on-active true
+
+    when
+        $now : Date()
+        $reservation : Reservation( ChronoUnit.DAYS.between(startDate.toLocalDate(), $now) == 15 )
+        Property($accRes : reservations)
+        Reservation( ChronoUnit.DAYS.between(endDate.toLocalDate(), $reservation.startDate.toLocalDate()) == 1  ) from $accRes
+        Reservation( ChronoUnit.DAYS.between(startDate.toLocalDate(), $reservation.endDate.toLocalDate()) == 1) from $accRes
+    then
+       modify($reservation) {
+            decreaseCancelReservationPrice(0.55)
+       }
+end
+
+
+
+rule "Reservation cancel price 30 days before start"
+    agenda-group "reservation cancel price"
+    salience -1
+    lock-on-active true
+
+    when
+        $now : Date()
+        $reservation : Reservation( ChronoUnit.DAYS.between(startDate.toLocalDate(), $now) >= 30 )
+    then
+       modify($reservation) {
+            decreaseCancelReservationPrice(1)
+       }
+end

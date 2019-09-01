@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
+    targetNamespace="http://www.xml.com/megatravel/soap/model/base">
+    <xs:complexType abstract="true" name="XmlBase">
+        <xs:sequence>
+            <xs:element name="id">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:length value="36"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element default="false" name="isDeleted" type="xs:boolean"/>
+            <xs:element name="createTime" type="xs:dateTime"/>
+            <xs:element name="updateTime" form="qualified" type="xs:dateTime"/>
+        </xs:sequence>
+    </xs:complexType>
+</xs:schema>

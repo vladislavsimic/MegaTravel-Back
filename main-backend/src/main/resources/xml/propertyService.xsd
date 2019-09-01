@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
+    targetNamespace="http://www.xml.com/megatravel/soap/model/propertyservice"
+    xmlns:property="http://www.xml.com/megatravel/soap/model/property"
+    xmlns:b="http://www.xml.com/megatravel/soap/model/base"
+   xmlns:ser="http://www.xml.com/megatravel/soap/model/service">
+
+    <xs:import namespace="http://www.xml.com/megatravel/soap/model/base" schemaLocation="base.xsd"/>
+    <xs:import namespace="http://www.xml.com/megatravel/soap/model/service" schemaLocation="service.xsd"/>
+    <xs:import namespace="http://www.xml.com/megatravel/soap/model/property" schemaLocation="property.xsd"/>
+
+    <xs:complexType name="XmlPropertyService">
+        <xs:complexContent>
+            <xs:extension base="b:XmlBase">
+                <xs:sequence>
+                    <xs:element name="property" type="property:XmlProperty"/>
+                    <xs:element name="service" type="ser:XmlService"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+</xs:schema>

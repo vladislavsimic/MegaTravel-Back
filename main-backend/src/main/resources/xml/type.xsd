@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
+    targetNamespace="http://www.xml.com/megatravel/soap/model/type"
+        xmlns:b="http://www.xml.com/megatravel/soap/model/base"
+       xmlns:tp="http://www.xml.com/megatravel/soap/model/type">
+    <xs:import namespace="http://www.xml.com/megatravel/soap/model/base" schemaLocation="base.xsd"/>
+
+    <xs:element name="getTypesRequest">
+        <xs:complexType/>
+    </xs:element>
+
+    <xs:element name="getTypesResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="types" type="tp:XmlType" maxOccurs="unbounded" minOccurs="0" />
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+
+    <xs:complexType name="XmlType">
+        <xs:complexContent>
+            <xs:extension base="b:XmlBase">
+                <xs:sequence>
+                    <xs:element name="name" type="xs:string"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+</xs:schema>

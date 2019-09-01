@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
+    targetNamespace="http://www.xml.com/megatravel/soap/model/property"
+       xmlns:propS="http://www.xml.com/megatravel/soap/model/propertyservice"
+       xmlns:p="http://www.xml.com/megatravel/soap/model/property"
+       xmlns:reservation="http://www.xml.com/megatravel/soap/model/reservation"
+       xmlns:tp="http://www.xml.com/megatravel/soap/model/type"
+       xmlns:b="http://www.xml.com/megatravel/soap/model/base"
+       xmlns:category="http://www.xml.com/megatravel/soap/model/category"
+       xmlns:a="http://www.xml.com/megatravel/soap/model/agent"
+       xmlns:ad="http://www.xml.com/megatravel/soap/model/address">
+
+    <xs:import namespace="http://www.xml.com/megatravel/soap/model/base" schemaLocation="base.xsd"/>
+    <xs:import namespace="http://www.xml.com/megatravel/soap/model/agent" schemaLocation="agent.xsd"/>
+    <xs:import namespace="http://www.xml.com/megatravel/soap/model/address" schemaLocation="address.xsd"/>
+    <xs:import namespace="http://www.xml.com/megatravel/soap/model/category" schemaLocation="category.xsd"/>
+    <xs:import namespace="http://www.xml.com/megatravel/soap/model/type" schemaLocation="type.xsd"/>
+    <xs:import namespace="http://www.xml.com/megatravel/soap/model/reservation" schemaLocation="reservation.xsd"/>
+    <xs:import namespace="http://www.xml.com/megatravel/soap/model/propertyservice" schemaLocation="propertyService.xsd"/>
+
+    <xs:element name="createPropertyRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="name" type="xs:string"/>
+                <xs:element name="description" type="xs:string"/>
+                <xs:element name="stars" type="xs:int"/>
+                <xs:element name="numberOfPeople" type="xs:int"/>
+                <xs:element name="numberOfCancellationDays" type="xs:int"/>
+                <xs:element name="summerPrice" type="xs:double"/>
+                <xs:element name="winterPrice" type="xs:double"/>
+                <xs:element name="springPrice" type="xs:double"/>
+                <xs:element name="autumnPrice" type="xs:double"/>
+                <xs:element name="typeId" type="xs:string"/>
+                <xs:element name="agentId" type="xs:string"/>
+                <xs:element name="address" type="p:addressRequest"/>
+                <xs:element name="services">
+                    <xs:simpleType>
+                        <xs:list itemType="xs:string"/>
+                    </xs:simpleType>
+                </xs:element>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+
+    <xs:element name="createPropertyResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="property" type="p:XmlProperty"/>
+                <xs:element name="status" type="xs:int"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="getPropertiesResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="properties" type="p:XmlProperty" minOccurs="0" maxOccurs="unbounded" />
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="getPropertiesRequest"/>
+
+    <xs:complexType name="addressRequest">
+        <xs:sequence>
+            <xs:element name="street" type="xs:string"/>
+            <xs:element name="city" type="xs:string"/>
+            <xs:element name="country" type="xs:string"/>
+            <xs:element name="longitude" type="xs:double"/>
+            <xs:element name="latitude" type="xs:double"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="XmlProperty">
+        <xs:complexContent>
+            <xs:extension base="b:XmlBase">
+                <xs:sequence>
+                    <xs:element name="name">
+                        <xs:simpleType>
+                            <xs:restriction base="xs:string">
+                                <xs:maxLength value="128"/>
+                                <xs:minLength value="0"/>
+                            </xs:restriction>
+                        </xs:simpleType>
+                    </xs:element>
+                    <xs:element name="description">
+                        <xs:simpleType>
+                            <xs:restriction base="xs:string">
+                                <xs:minLength value="0"/>
+                                <xs:maxLength value="1024"/>
+                            </xs:restriction>
+                        </xs:simpleType>
+                    </xs:element>
+                    <xs:element name="category" type="xs:string"/>
+                    <xs:element name="stars">
+                        <xs:simpleType>
+                            <xs:restriction base="xs:int">
+                                <xs:maxInclusive value="10"/>
+                            </xs:restriction>
+                        </xs:simpleType>
+                    </xs:element>
+
+                    <xs:element name="numberOfPeople" type="xs:int"/>
+                    <xs:element name="numberOfCancellationDays" type="xs:int"/>
+                    <xs:element name="summerPrice" type="xs:double"/>
+                    <xs:element name="winterPrice" type="xs:double"/>
+                    <xs:element name="springPrice" type="xs:double"/>
+                    <xs:element name="autumnPrice" type="xs:double"/>
+                    <xs:element name="type" type="tp:XmlType"/>
+                    <xs:element name="address" type="ad:XmlAddress"/>
+                    <xs:element name="agent" type="a:XmlAgent"/>
+                    <xs:element maxOccurs="unbounded" name="reservations" type="reservation:XmlReservation"/>
+                    <xs:element maxOccurs="unbounded" name="propertyServices"
+                                type="propS:XmlPropertyService"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+</xs:schema>

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
+    targetNamespace="http://www.xml.com/megatravel/soap/model/agent"
+   xmlns:u="http://www.xml.com/megatravel/soap/model/user"
+   xmlns:a="http://www.xml.com/megatravel/soap/model/agent"
+   xmlns:property="http://www.xml.com/megatravel/soap/model/property"
+   xmlns:b="http://www.xml.com/megatravel/soap/model/base"
+   xmlns:ad="http://www.xml.com/megatravel/soap/model/address">
+
+    <xs:import namespace="http://www.xml.com/megatravel/soap/model/user" schemaLocation="user.xsd"/>
+    <xs:import namespace="http://www.xml.com/megatravel/soap/model/base" schemaLocation="base.xsd"/>
+    <xs:import namespace="http://www.xml.com/megatravel/soap/model/address" schemaLocation="address.xsd"/>
+    <xs:import namespace="http://www.xml.com/megatravel/soap/model/property" schemaLocation="property.xsd"/>
+
+    <xs:element name="getAgentsRequest">
+        <xs:complexType/>
+    </xs:element>
+
+    <xs:element name="getAgentsResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="agents" type="a:XmlAgent" minOccurs="0" maxOccurs="unbounded" />
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="loginAgentRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="emailOrUsername" type="xs:string"/>
+                <xs:element name="password" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+
+    <xs:element name="loginAgentResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="agent" type="a:XmlAgent"/>
+                <xs:element name="status" type="xs:int"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:complexType name="XmlAgent">
+        <xs:complexContent>
+            <xs:extension base="b:XmlBase">
+                <xs:sequence>
+                    <xs:element name="user" type="u:XmlUser"/>
+                    <xs:element name="pib">
+                        <xs:simpleType>
+                            <xs:restriction base="xs:string">
+                                <xs:maxLength value="64"/>
+                                <xs:minLength value="0"/>
+                            </xs:restriction>
+                        </xs:simpleType>
+                    </xs:element>
+                    <xs:element name="address" type="ad:XmlAddress"/>
+                    <xs:element name="properties" maxOccurs="unbounded" type="property:XmlProperty"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+</xs:schema>

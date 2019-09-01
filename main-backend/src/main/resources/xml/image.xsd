@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
+    targetNamespace="http://www.xml.com/megatravel/soap/model/image"
+           xmlns:b="http://www.xml.com/megatravel/soap/model/base">
+    <xs:import namespace="http://www.xml.com/megatravel/soap/model/base" schemaLocation="base.xsd"/>
+
+    <xs:element name="uploadImageForPropertyRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="propertyId" type="xs:string"/>
+                <xs:element name="url" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="uploadImageForPropertyResponse">
+        <xs:complexType/>
+    </xs:element>
+
+    <xs:complexType name="XmlImage">
+        <xs:complexContent>
+            <xs:extension base="b:XmlBase">
+                <xs:sequence>
+                    <xs:element name="entityId">
+                        <xs:simpleType>
+                            <xs:restriction base="xs:string">
+                                <xs:length value="36"/>
+                            </xs:restriction>
+                        </xs:simpleType>
+                    </xs:element>
+                    <xs:element name="entityType">
+                        <xs:simpleType>
+                            <xs:restriction base="xs:string">
+                                <xs:enumeration value="PROFILE_PICTURE"/>
+                                <xs:enumeration value="PROPERTY"/>
+                            </xs:restriction>
+                        </xs:simpleType>
+                    </xs:element>
+                    <xs:element name="url" type="xs:string"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+</xs:schema>

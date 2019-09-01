@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns:message="http://www.xml.com/megatravel/soap/model/message"
+           xmlns:reservation="http://www.xml.com/megatravel/soap/model/reservation"
+           xmlns:category="http://www.xml.com/megatravel/soap/model/category" elementFormDefault="qualified"
+           xmlns:b="http://www.xml.com/megatravel/soap/model/base"
+    targetNamespace="http://www.xml.com/megatravel/soap/model/user"
+       xmlns:u="http://www.xml.com/megatravel/soap/model/user"
+       xmlns:i="http://www.xml.com/megatravel/soap/model/image">
+    <xs:import namespace="http://www.xml.com/megatravel/soap/model/base" schemaLocation="base.xsd"/>
+    <xs:import namespace="http://www.xml.com/megatravel/soap/model/image" schemaLocation="image.xsd"/>
+    <xs:import namespace="http://www.xml.com/megatravel/soap/model/category" schemaLocation="category.xsd"/>
+    <xs:import namespace="http://www.xml.com/megatravel/soap/model/reservation" schemaLocation="reservation.xsd"/>
+    <xs:import namespace="http://www.xml.com/megatravel/soap/model/message" schemaLocation="message.xsd"/>
+
+    <xs:complexType name="XmlUser">
+        <xs:complexContent>
+            <xs:extension base="b:XmlBase">
+                <xs:sequence>
+                    <xs:element name="firstNme">
+                        <xs:simpleType>
+                            <xs:restriction base="xs:string">
+                                <xs:minLength value="0"/>
+                                <xs:maxLength value="128"/>
+                            </xs:restriction>
+                        </xs:simpleType>
+                    </xs:element>
+                    <xs:element name="lastName">
+                        <xs:simpleType>
+                            <xs:restriction base="xs:string">
+                                <xs:minLength value="0"/>
+                                <xs:maxLength value="128"/>
+                            </xs:restriction>
+                        </xs:simpleType>
+                    </xs:element>
+                    <xs:element name="username">
+                        <xs:simpleType>
+                            <xs:restriction base="xs:string">
+                                <xs:minLength value="6"/>
+                                <xs:maxLength value="32"/>
+                            </xs:restriction>
+                        </xs:simpleType>
+                    </xs:element>
+                    <xs:element name="password">
+                        <xs:simpleType>
+                            <xs:restriction base="xs:string">
+                                <xs:minLength value="64"/>
+                                <xs:maxLength value="64"/>
+                            </xs:restriction>
+                        </xs:simpleType>
+                    </xs:element>
+                    <xs:element name="email" type="u:email"/>
+                    <xs:element name="role" default="USER">
+                        <xs:simpleType>
+                            <xs:restriction base="xs:string">
+                                <xs:enumeration value="USER"/>
+                                <xs:enumeration value="ADMIN"/>
+                                <xs:enumeration value="AGENT"/>
+                            </xs:restriction>
+                        </xs:simpleType>
+                    </xs:element>
+                    <xs:element name="profilePicture" nillable="true" type="i:XmlImage"> </xs:element>
+                    <xs:element name="isActive" type="xs:boolean"/>
+                    <xs:element name="category" type="xs:string"/>
+                    <xs:element name="reservations" maxOccurs="unbounded" type="reservation:XmlReservation" />
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:simpleType name="email">
+        <xs:restriction base="xs:string">
+            <xs:pattern value="[^@]+@[^\.]+\..+"/>
+        </xs:restriction>
+    </xs:simpleType>
+</xs:schema>

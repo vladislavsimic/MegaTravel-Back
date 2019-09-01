@@ -1,0 +1,125 @@
+package rules;
+dialect  "mvel"
+
+import java.time.LocalDate
+import java.time.temporal.ChronoUnit;
+import com.xml.megatravel.model.*
+import com.xml.megatravel.model.enumeration.*
+
+declare TooManyLastMinuteEvents
+    @role(event)
+    @expires("24h")
+    city: String
+    reason: String
+end
+
+declare TooManyEarlyBirdEvents
+    @role(event)
+    @expires("24h")
+    city: String
+    reason: String
+end
+
+declare SearchInLastThreeMinutes
+    @role(event)
+    @expires("24h")
+    city: String
+    startDate: LocalDate
+    endDate: LocalDate
+end
+
+declare CanceledReservation
+    @role(event)
+    @expires("24h")
+    res: Reservation() over window:time(10m)
+    from entry-point
+end
+
+
+
+rule "Last minute 50% discount during reservation"
+    when
+        $now: LocalDate()
+        $r: Reservation(startDate.toLocalDate() == $now)
+        not (TooManyLastMinuteEvents( city == $r.property.address.city , reason == "Tooo many last minute reservations"))
+    then
+        modify($r) {
+            createDiscount(0.5)
+        }
+end
+
+rule "Early bid greater than 90 discount during reservation"
+    when
+        $now: LocalDate()
+        $r: Reservation(ChronoUnit.DAYS.between($now, startDate.toLocalDate()) >= 90)
+        not (TooManyEarlyBirdEvents( city == $r.property.address.city , reason == "Tooo many early bird reservations"))
+    then
+        modify($r) {
+            createDiscount(0.75)
+        }
+end
+
+rule "Too many early-birds reservations"
+    when
+        $res: Reservation($city: property.address.city)
+        Number(intValue >= 15) from accumulate(
+                    $res2: Reservation(
+                        this != $res,
+                        property.address.city == $city,
+                        this meets[1m30s] $res
+                    ),
+                    count($res2)
+        )
+        not (TooManyEarlyBirdEvents( city == $city , reason == "Tooo many early bird reservations"))
+    then
+        insert (new TooManyEarlyBirdEvents($city, "Tooo many early bird reservations"))
+end
+
+rule "Too many last-minute reservations"
+    when
+        $res: Reservation($city: property.address.city)
+        Number(intValue >= 5) from accumulate(
+                    $res2: Reservation(
+                        this != $res,
+                        property.address.city == $city,
+                        this meets[30m] $res
+                    ),
+                    count($res2)
+        )
+        not (TooManyLastMinuteEvents( city == $city , reason == "Tooo many last minute reservations"))
+    then
+        insert (new TooManyLastMinuteEvents($city, "Tooo many last minute reservations"))
+end
+
+rule "Searches GT 30 for City and timespan"
+    when
+        $now: LocalDate()
+        $prop: Property($city = address.city)
+        $res: Reservation(property = $prop, $startDate = startDate, $endDate = endDate)
+        Number(intValue = 0) from accumulate(
+                        $res2: Reservation(
+                            stardDate <= $now,
+                            endDate >= $now,
+                            property.address.city == $city
+                        )
+                        over window.time[4d] $res,
+                        count($res2)
+                )
+        not (SearchInLastThreeMinutes(city == $city , startDate = $res.startDare, endDate = $res.endDate))
+    then
+        modify($res){
+            createDiscount(0.3)
+        }
+end
+
+rule "Reservation canceled in 10 minutes"
+    when
+        Number(intValue > 0) from accumulate(
+            $res: Reservation(reservationStatus == ReservationStatus.CANCELED) from CanceledReservation,
+            count($res)
+        )
+    then
+        modify($res){
+            createDiscount(0.4)
+        }
+end
