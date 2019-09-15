@@ -43,20 +43,8 @@ public class PropertyService {
     }
 
     @Transactional(readOnly = true)
-    public List<Property> getProperties(String city, LocalDateTime startDate, LocalDateTime endDate, Integer numberOfPeople, UUID typeId, Integer stars, Double distance, List<UUID> serviceIds, Boolean freeCancel, Integer daysToCancel, SortCriteria sortCriteria) {
-        final List<Property> properties =  propertyRepository.findAllBySearchCriteria(city, startDate, endDate, numberOfPeople, typeId, stars, distance, serviceIds, freeCancel, daysToCancel);
-        switch (sortCriteria) {
-            case RECOMMENDED: return properties;
-            case PRICE_LOWEST_FIRST: return properties.stream().sorted(Comparator.comparing(Property::getSummerPrice)).collect(Collectors.toList());
-            case PRICE_HIGHEST_FIRST: return properties.stream().sorted(Comparator.comparing(Property::getSummerPrice).reversed()).collect(Collectors.toList());
-            case DISTANCE: return properties;
-            case RATING_HIGHEST_FIRST: return properties.stream().sorted(Comparator.comparing(p -> p.getReservations().stream().mapToDouble(r -> r.getRating() != null ? r.getRating().getOverallRating() : 0).sum())).collect(Collectors.toList());
-            case RATING_LOWEST_FIRST: return properties.stream().sorted(Comparator.comparing(p -> p.getReservations().stream().mapToDouble(r -> r.getRating() != null ? r.getRating().getOverallRating() : 0).sum())).collect(Collectors.toList()).stream().sorted(Collections.reverseOrder()).collect(Collectors.toList());
-            case HOTEL: return properties.stream().filter(p -> p.getType().getName().equals("Hotel")).collect(Collectors.toList());
-            case BED_BREAKFAST: return properties.stream().filter(p -> p.getType().getName().equals("Bed & Breakfast")).collect(Collectors.toList());
-            case APARTMENT: return properties.stream().filter(p -> p.getType().getName().equals("Apartment")).collect(Collectors.toList());
-            default: return properties;
-        }
+    public List<Property> getProperties() {
+        return propertyRepository.findAll();
     }
 
     @Transactional(readOnly = true)

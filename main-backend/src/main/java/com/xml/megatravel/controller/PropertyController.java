@@ -38,18 +38,8 @@ public class PropertyController {
     }
 
     @GetMapping
-    public ResponseEntity<List<PropertyResponse>> getProperties(@RequestParam(name = "city") String city,
-                                                                @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)@RequestParam(name = "startDate") LocalDateTime startDate,
-                                                                @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) @RequestParam(name = "endDate") LocalDateTime endDate,
-                                                                @RequestParam(name = "numberOfPeople") Integer numberOfPeople,
-                                                                @RequestParam(name = "typeId", required = false) UUID typeId,
-                                                                @RequestParam(name = "stars", required = false) Integer stars ,
-                                                                @RequestParam(name = "distance", required = false) Double distance,
-                                                                @RequestParam(name = "serviceIds", required = false) List<UUID> serviceIds,
-                                                                @RequestParam(name = "freeCancel", required = false) Boolean freeCancel,
-                                                                @RequestParam(name = "daysToCancel", required = false) Integer daysToCancel,
-                                                                @RequestParam(name = "sortCriteria") SortCriteria sortCriteria) {
-        final List<Property> properties = propertyService.getProperties(city, startDate, endDate, numberOfPeople, typeId, stars, distance, serviceIds, freeCancel, daysToCancel, sortCriteria);
+    public ResponseEntity<List<PropertyResponse>> getProperties() {
+        final List<Property> properties = propertyService.getProperties();
         final Map<UUID, List<Image>> images = imageService.getImagesForProperties(properties.stream().map(Property::getId).collect(Collectors.toList()));
         return ResponseEntity.ok(toPropertyResponseListFromPropertyList(properties, images));
     }
