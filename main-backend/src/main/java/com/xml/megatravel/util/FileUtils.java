@@ -9,7 +9,7 @@ import java.io.IOException;
 public class FileUtils {
 
     public static File convertMultipartFileToFile(MultipartFile multipartFile) throws IOException {
-        final File file = new File("/tmp/" + multipartFile.getOriginalFilename());
+        final File file = new File("C:/Users/acer/" + multipartFile.getOriginalFilename());
         final FileOutputStream fos = new FileOutputStream(file);
         fos.write(multipartFile.getBytes());
         fos.close();

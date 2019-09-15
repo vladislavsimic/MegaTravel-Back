@@ -37,6 +37,13 @@ public class UserController {
         return ResponseEntity.ok(toUserResponseListFromUserList(users));
     }
 
+    @GetMapping(value = "/agents")
+    @PreAuthorize("hasAuthority('ADMIN')")
+    public ResponseEntity<List<UserResponse>> getAgents() {
+        final List<User> agents = userService.getAgents();
+        return ResponseEntity.ok(toUserResponseListFromUserList(agents));
+    }
+
     @GetMapping(value = "/me")
     @PreAuthorize("hasAnyAuthority('ADMIN', 'AGENT', 'USER')")
     public ResponseEntity<UserResponse> getMe(@ApiIgnore @AuthenticationPrincipal UUID principalId) {

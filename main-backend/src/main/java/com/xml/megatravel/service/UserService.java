@@ -117,7 +117,7 @@ public class UserService {
 
     @Transactional(readOnly = true)
     public List<User> getUsers() {
-        return userRepository.findAll();
+        return userRepository.findAllByRole(Role.USER);
     }
 
     @Transactional(readOnly = true)
@@ -167,4 +167,8 @@ public class UserService {
                 .orElseThrow(() -> new UserNotFoundException("User with given id not found."));
     }
 
+    @Transactional(readOnly = true)
+    public List<User> getAgents() {
+        return userRepository.findAllByRole(Role.AGENT);
+    }
 }

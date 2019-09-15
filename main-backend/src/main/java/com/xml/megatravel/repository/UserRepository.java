@@ -1,11 +1,13 @@
 package com.xml.megatravel.repository;
 
 import com.xml.megatravel.model.User;
+import com.xml.megatravel.model.enumeration.Role;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -20,4 +22,6 @@ public interface UserRepository extends JpaRepository<User, UUID> {
 
     @Query(value = "SELECT CASE WHEN COUNT(u) > 0 THEN true ELSE false END FROM User u WHERE u.email = :email")
     Boolean existsByEmail(@Param("email") String email);
+
+    List<User> findAllByRole(Role role);
 }
