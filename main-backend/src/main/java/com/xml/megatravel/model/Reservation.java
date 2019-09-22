@@ -3,7 +3,6 @@ package com.xml.megatravel.model;
 import com.xml.megatravel.model.enumeration.ReservationStatus;
 import lombok.*;
 import org.hibernate.annotations.Where;
-import org.kie.api.definition.type.Role;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -15,7 +14,6 @@ import java.time.LocalDateTime;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Role(Role.Type.FACT)
 @Table(name = "reservation")
 @Where(clause = "is_deleted='false'")
 public class Reservation extends BaseEntity {
@@ -54,11 +52,4 @@ public class Reservation extends BaseEntity {
     @Column(name = "cancellation_price")
     private Double cancellationPrice;
 
-    public void decreaseCancelReservationPrice(double discountPercentage) {
-        price -= price * discountPercentage;
-    }
-
-    public void createDiscount(double discountPercents) {
-        price -= price * discountPercents;
-    }
 }

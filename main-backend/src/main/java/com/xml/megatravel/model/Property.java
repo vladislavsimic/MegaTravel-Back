@@ -3,7 +3,6 @@ package com.xml.megatravel.model;
 import com.xml.megatravel.model.enumeration.Category;
 import lombok.*;
 import org.hibernate.annotations.Where;
-import org.kie.api.definition.type.Role;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -13,13 +12,13 @@ import javax.validation.constraints.Size;
 import java.util.HashSet;
 import java.util.Set;
 
-import static com.xml.megatravel.util.ValidationConstants.*;
+import static com.xml.megatravel.util.ValidationConstants.PROPERTY_DESCRIPTION_SIZE;
+import static com.xml.megatravel.util.ValidationConstants.PROPERTY_NAME_SIZE;
 
 @Getter
 @Setter
 @Entity
 @Builder
-@Role(Role.Type.FACT)
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "property")

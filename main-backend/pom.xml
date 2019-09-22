@@ -41,11 +41,6 @@
 			<artifactId>flyway-core</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>org.kie</groupId>
-			<artifactId>kie-ci</artifactId>
-			<version>7.19.0.Final</version>
-		</dependency>
-		<dependency>
 			<groupId>com.amazonaws</groupId>
 			<artifactId>aws-java-sdk</artifactId>
 			<version>1.11.560</version>
@@ -145,27 +140,6 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
-<!--			<plugin>-->
-<!--				<groupId>org.codehaus.mojo</groupId>-->
-<!--				<artifactId>jaxb2-maven-plugin</artifactId>-->
-<!--				<version>2.2</version>-->
-<!--				<executions>-->
-<!--					<execution>-->
-<!--						<id>xjc</id>-->
-<!--						<goals>-->
-<!--							<goal>xjc</goal>-->
-<!--						</goals>-->
-<!--					</execution>-->
-<!--				</executions>-->
-<!--				<configuration>-->
-<!--&lt;!&ndash;					<xjbSources>&ndash;&gt;-->
-<!--&lt;!&ndash;						<xjbSource>src/main/resources/xml/xjb/global.xjb</xjbSource>&ndash;&gt;-->
-<!--&lt;!&ndash;					</xjbSources>&ndash;&gt;-->
-<!--					<sources>-->
-<!--						<source>src/main/resources/xml/</source>-->
-<!--					</sources>-->
-<!--				</configuration>-->
-<!--			</plugin>-->
 		</plugins>
 	</build>
 
