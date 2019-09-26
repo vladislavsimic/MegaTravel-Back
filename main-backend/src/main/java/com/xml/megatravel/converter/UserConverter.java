@@ -79,5 +79,4 @@ public class UserConverter {
                 .profilePictureUrl(user.getProfilePicture() != null ? user.getProfilePicture().getUrl() : null)
                 .build();
     }
-
 }

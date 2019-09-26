@@ -36,7 +36,6 @@ public class UpdatePropertyRequest {
     @Enumerated(EnumType.STRING)
     private Category category;
 
-    @Size(max = PROPERTY_MAX_STARS)
     @PositiveOrZero
     private Integer stars;
 

@@ -125,6 +125,11 @@ public class UserService {
         return getUserFromRepository(id);
     }
 
+    @Transactional(readOnly = true)
+    public User getAgentById(UUID id) {
+        return getUserFromRepository(id);
+    }
+
     @Transactional(rollbackFor = Exception.class)
     public void blockUser(UUID id) {
         final User user = getUserFromRepository(id);

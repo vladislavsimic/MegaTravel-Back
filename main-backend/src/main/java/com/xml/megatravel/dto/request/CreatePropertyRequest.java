@@ -30,7 +30,6 @@ public class CreatePropertyRequest {
     @Size(max = PROPERTY_DESCRIPTION_SIZE)
     private String description;
 
-    @Size(max = PROPERTY_MAX_STARS)
     @PositiveOrZero
     private Integer stars;
 
@@ -64,7 +63,6 @@ public class CreatePropertyRequest {
     @NotNull
     private AddressDto address;
 
-    @NotNull
     private UUID agentId;
 
     private List<UUID> services = new ArrayList<>();

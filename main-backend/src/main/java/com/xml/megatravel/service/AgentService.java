@@ -25,6 +25,12 @@ public class AgentService {
     }
 
     @Transactional(readOnly = true)
+    public Agent getAgentByUserId(UUID id) {
+        return agentRepository.findByUserId(id)
+                .orElseThrow(() -> new EntityNotFoundException("Agent with given Id not found."));
+    }
+
+    @Transactional(readOnly = true)
     public Agent getAgentByUsernameOrEmail(String usernameOrEmail) {
         return agentRepository.findByUsernameOrEmail(usernameOrEmail)
                 .orElseThrow(() -> new EntityNotFoundException("Agent with given username or email not found."));

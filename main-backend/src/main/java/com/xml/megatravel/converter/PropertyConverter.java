@@ -31,7 +31,7 @@ public class PropertyConverter {
                 .name(property.getName())
                 .description(property.getDescription())
                 .stars(property.getStars())
-                .type(property.getType().getName())
+                .type(property.getType().getId())
                 .autumnPrice(property.getAutumnPrice())
                 .summerPrice(property.getSummerPrice())
                 .winterPrice(property.getWinterPrice())

@@ -43,7 +43,7 @@ public class PropertyResponse {
 
     private Double autumnPrice;
 
-    private String type;
+    private UUID type;
 
     private AddressDto address;
 

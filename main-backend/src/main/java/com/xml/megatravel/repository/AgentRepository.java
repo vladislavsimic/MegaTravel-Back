@@ -17,4 +17,6 @@ public interface AgentRepository extends JpaRepository<Agent, UUID> {
             "JOIN Address ad ON a.address.id = ad.id " +
             "WHERE u.username = :usernameOrEmail OR u.email = :usernameOrEmail ")
     Optional<Agent> findByUsernameOrEmail(@Param("usernameOrEmail") String usernameOrEmail);
+
+    Optional<Agent> findByUserId(UUID userId);
 }
