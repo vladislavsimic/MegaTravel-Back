@@ -54,6 +54,13 @@ public class PropertyController {
         return ResponseEntity.ok(toPropertyResponseListFromPropertyList(properties, images));
     }
 
+    @GetMapping(value = "/{id}/manager")
+    public ResponseEntity<List<PropertyResponse>> getAgentProperties(@PathVariable("id") UUID id) {
+        final List<Property> properties = propertyService.getAgentProperties(id);
+        final Map<UUID, List<Image>> images = imageService.getImagesForProperties(properties.stream().map(Property::getId).collect(Collectors.toList()));
+        return ResponseEntity.ok(toPropertyResponseListFromPropertyList(properties, images));
+    }
+
     @GetMapping(value = "/{id}")
     public ResponseEntity<PropertyResponse> getProperty(@PathVariable("id") UUID id) {
         final Property property = propertyService.getProperty(id);

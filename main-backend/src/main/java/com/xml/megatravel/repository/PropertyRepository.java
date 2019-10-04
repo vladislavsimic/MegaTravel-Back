@@ -24,4 +24,6 @@ public interface PropertyRepository extends JpaRepository<Property, UUID> {
 //    List<Property> findAllBySearchCriteria(String city, LocalDateTime startDate, LocalDateTime endDate, Integer numberOfPeople, UUID typeId, Integer stars, Double distance, List<UUID> serviceIds, Boolean freeCancel, Integer daysToCancel);
 
     List<Property> findAllByAgentId(UUID agentId);
+
+    List<Property> findAllByAgentUserId(UUID agentId);
 }

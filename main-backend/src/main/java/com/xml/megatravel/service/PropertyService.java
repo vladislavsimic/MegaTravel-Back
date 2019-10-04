@@ -53,6 +53,11 @@ public class PropertyService {
     }
 
     @Transactional(readOnly = true)
+    public List<Property> getAgentProperties(UUID id){
+        return propertyRepository.findAllByAgentUserId(id);
+    }
+
+    @Transactional(readOnly = true)
     public Property getProperty(UUID id) {
         return propertyRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Property with given Id could not be found!"));
