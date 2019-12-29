@@ -1,5 +1,6 @@
 package com.xml.megatravel.converter;
 
+import com.xml.megatravel.dto.request.ServiceRequest;
 import com.xml.megatravel.dto.response.ServiceResponse;
 import com.xml.megatravel.model.Service;
 
@@ -7,6 +8,10 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class ServiceConverter {
+
+    public static Service toServiceFromServiceRequest(ServiceRequest request) {
+        return Service.builder().name(request.getName()).build();
+    }
 
     public static List<ServiceResponse> toListServiceResponseFromListService(List<Service> services) {
         return services.stream().map(ServiceConverter::toServiceResponseFromService).collect(Collectors.toList());

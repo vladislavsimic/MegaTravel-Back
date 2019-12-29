@@ -11,6 +11,8 @@ import java.util.UUID;
 @Repository
 public interface RatingRepository extends JpaRepository<Rating, UUID> {
 
+    List<Rating> findAllByReservationPropertyId(UUID propertyId);
+
     List<Rating> findAllByReservationPropertyIdAndIsCommentApprovedTrueAndIsCommentReviewedTrue(UUID propertyId);
 
     Optional<Rating> findByReservationId(UUID reservationId);

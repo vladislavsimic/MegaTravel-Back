@@ -72,7 +72,7 @@ public class RatingService {
 
     @Transactional(readOnly = true)
     public List<Rating> getByPropertyId(UUID propertyId) {
-        return ratingRepository.findAllByReservationPropertyIdAndIsCommentApprovedTrueAndIsCommentReviewedTrue(propertyId);
+        return ratingRepository.findAllByReservationPropertyId(propertyId);
     }
 
     @Transactional(readOnly = true)

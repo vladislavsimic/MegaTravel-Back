@@ -46,7 +46,10 @@ public class ReservationService {
 
     @Transactional(rollbackFor = Exception.class)
     public Reservation updateReservation(Reservation reservation, UpdateReservationRequest request) {
-        // TODO: 2019-06-25 implement
+        reservation.setReservationStatus(request.getReservationStatus());
+
+        reservationRepository.save(reservation);
+
         return reservation;
     }
 
@@ -80,5 +83,15 @@ public class ReservationService {
     public Reservation getReservationByUserId(UUID reservationId, UUID principalId) {
         return reservationRepository.findByIdAndUserId(reservationId, principalId)
                 .orElse(null);
+    }
+
+    @Transactional(readOnly = true)
+    public List<Reservation> getReservationByPropertyId(UUID propertyId) {
+        return reservationRepository.findAllByPropertyId(propertyId);
+    }
+
+    @Transactional(readOnly = true)
+    public List<Reservation> getReservationByUserIdPropertyId(UUID userId, UUID propertyId) {
+        return reservationRepository.findAllByUserIdAndPropertyId(userId, propertyId);
     }
 }

@@ -1,6 +1,7 @@
 package com.xml.megatravel.dto.request;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.xml.megatravel.model.Property;
 import com.xml.megatravel.model.User;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -38,4 +39,7 @@ public class CreateReservationRequest {
 
     @JsonIgnore
     private User user;
+
+    @JsonIgnore
+    private Property property;
 }

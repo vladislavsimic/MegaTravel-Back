@@ -1,5 +1,6 @@
 package com.xml.megatravel.dto.request;
 
+import com.xml.megatravel.model.enumeration.ReservationStatus;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -15,12 +16,9 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class UpdateReservationRequest {
 
-    @NotNull
-    private LocalDateTime startDate;
-
-    @NotNull
-    private LocalDateTime endDate;
-
     @Positive
     private Integer numberOfPeople;
+
+    @NotNull
+    private ReservationStatus reservationStatus;
 }

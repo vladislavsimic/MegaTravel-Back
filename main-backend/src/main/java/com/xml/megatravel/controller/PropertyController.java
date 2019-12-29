@@ -69,7 +69,7 @@ public class PropertyController {
     }
 
     @PostMapping
-    @PreAuthorize("hasAnyAuthority('AGENT','ADMIN')")
+    @PreAuthorize("hasAnyAuthority('AGENT')")
     public ResponseEntity<IdWrapper> createProperty(@Valid @RequestBody CreatePropertyRequest request, @ApiIgnore @AuthenticationPrincipal UUID principalId) {
         final User user = userService.getUserById(principalId);
         final Agent agent;
@@ -92,7 +92,7 @@ public class PropertyController {
     }
 
     @DeleteMapping(value = "/{id}")
-    @PreAuthorize("hasAnyAuthority('AGENT')")
+    @PreAuthorize("hasAnyAuthority('AGENT','ADMIN')")
     public ResponseEntity<Void> deleteProperty(@PathVariable("id") UUID id) {
         final Property property = propertyService.getProperty(id);
         propertyService.deleteProperty(property);

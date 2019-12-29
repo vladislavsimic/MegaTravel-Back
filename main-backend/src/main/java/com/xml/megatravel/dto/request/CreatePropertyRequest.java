@@ -43,19 +43,7 @@ public class CreatePropertyRequest {
 
     @NotNull
     @PositiveOrZero
-    private Double summerPrice;
-
-    @NotNull
-    @PositiveOrZero
-    private Double winterPrice;
-
-    @NotNull
-    @PositiveOrZero
-    private Double springPrice;
-
-    @NotNull
-    @PositiveOrZero
-    private Double autumnPrice;
+    private Double price;
 
     @NotNull
     private UUID typeId;

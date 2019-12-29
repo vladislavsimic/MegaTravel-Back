@@ -64,7 +64,7 @@ public class RatingController {
         return ResponseEntity.ok(toRatingResponseListFromRatingList(ratings));
     }
 
-    @GetMapping(value = "/{propertyId}")
+    @GetMapping(value = "/property/{propertyId}")
     public ResponseEntity<List<RatingResponse>> getRatingsByProperty(@PathVariable("propertyId") UUID propertyId) {
         final List<Rating> ratings = ratingService.getByPropertyId(propertyId);
         return ResponseEntity.ok(toRatingResponseListFromRatingList(ratings));

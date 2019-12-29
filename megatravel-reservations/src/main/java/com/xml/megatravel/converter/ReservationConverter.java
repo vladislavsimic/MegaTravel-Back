@@ -23,6 +23,7 @@ public class ReservationConverter {
                 .startDate(request.getStartDate())
                 .reservationStatus(ReservationStatus.PENDING)
                 .user(request.getUser())
+                .property(request.getProperty())
                 .build();
     }
 
@@ -32,6 +33,7 @@ public class ReservationConverter {
 
     public static ReservationResponse toReservationResponseFromReservation(Reservation reservation) {
         return ReservationResponse.builder()
+                .id(reservation.getId())
                 .price(reservation.getPrice())
                 .endDate(reservation.getEndDate().format(DateTimeFormatter.ofPattern(DATE_TIME_FORMAT)))
                 .startDate(reservation.getStartDate().format(DateTimeFormatter.ofPattern(DATE_TIME_FORMAT)))

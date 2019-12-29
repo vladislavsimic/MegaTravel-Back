@@ -76,7 +76,7 @@ public class PropertyService {
         final List<Service> services = serviceRepository.findAllById(request.getServices());
         property.setPropertyServices(new HashSet<>(propertyServiceService.createPropertyServices(property, services)));
 
-        return property;
+         return property;
     }
 
     @Transactional(rollbackFor = Exception.class)
@@ -84,10 +84,7 @@ public class PropertyService {
         property.setName(request.getName());
         property.setDescription(request.getDescription());
         property.setCategory(request.getCategory());
-        property.setAutumnPrice(request.getAutumnPrice());
-        property.setSpringPrice(request.getSpringPrice());
-        property.setSummerPrice(request.getSummerPrice());
-        property.setWinterPrice(request.getWinterPrice());
+        property.setPrice(request.getPrice());
         property.setNumberOfPeople(request.getNumberOfPeople());
         property.setNumberOfCancellationDays(request.getNumberOfCancellationDays());
         property.setStars(request.getStars());
@@ -95,9 +92,9 @@ public class PropertyService {
 
         propertyRepository.save(property);
 
-        final List<Service> servicesToAdd = serviceRepository.findAllById(request.getAddedServices());
-        final List<Service> servicesToRemove = serviceRepository.findAllById(request.getRemovedServices());
-        propertyServiceService.updatePropertyServices(property, servicesToAdd, servicesToRemove);
+        final List<Service> services = serviceRepository.findAllById(request.getServices());
+        //final List<Service> servicesToRemove = serviceRepository.findAllById(request.getRemovedServices());
+        propertyServiceService.updatePropertyServices(property, services);
 
         return property;
     }

@@ -35,13 +35,7 @@ public class PropertyResponse {
 
     private Integer numberOfCancellationDays;
 
-    private Double summerPrice;
-
-    private Double winterPrice;
-
-    private Double springPrice;
-
-    private Double autumnPrice;
+    private Double price;
 
     private UUID type;
 
@@ -52,7 +46,7 @@ public class PropertyResponse {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = DateTimeUtil.DATE_TIME_FORMAT)
     private LocalDateTime createdAt;
 
-    private Map<UUID, String> propertyServices;
+    private List<String> propertyServices;
 
     private List<String> imageUrls;
 

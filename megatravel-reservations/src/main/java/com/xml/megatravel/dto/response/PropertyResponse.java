@@ -35,13 +35,7 @@ public class PropertyResponse {
 
     private Integer numberOfCancellationDays;
 
-    private Double summerPrice;
-
-    private Double winterPrice;
-
-    private Double springPrice;
-
-    private Double autumnPrice;
+    private Double price;
 
     private String type;
 

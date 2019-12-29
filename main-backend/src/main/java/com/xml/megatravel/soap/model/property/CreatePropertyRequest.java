@@ -63,10 +63,7 @@ import javax.xml.bind.annotation.XmlType;
     "stars",
     "numberOfPeople",
     "numberOfCancellationDays",
-    "summerPrice",
-    "winterPrice",
-    "springPrice",
-    "autumnPrice",
+    "price",
     "typeId",
     "agentId",
     "address",
@@ -85,10 +82,7 @@ public class CreatePropertyRequest {
     protected int stars;
     protected int numberOfPeople;
     protected int numberOfCancellationDays;
-    protected double summerPrice;
-    protected double winterPrice;
-    protected double springPrice;
-    protected double autumnPrice;
+    protected double price;
     @XmlElement(required = true)
     protected String typeId;
     @XmlElement(required = true)
@@ -199,64 +193,8 @@ public class CreatePropertyRequest {
      * Gets the value of the summerPrice property.
      * 
      */
-    public double getSummerPrice() {
-        return summerPrice;
-    }
-
-    /**
-     * Sets the value of the summerPrice property.
-     * 
-     */
-    public void setSummerPrice(double value) {
-        this.summerPrice = value;
-    }
-
-    /**
-     * Gets the value of the winterPrice property.
-     * 
-     */
-    public double getWinterPrice() {
-        return winterPrice;
-    }
-
-    /**
-     * Sets the value of the winterPrice property.
-     * 
-     */
-    public void setWinterPrice(double value) {
-        this.winterPrice = value;
-    }
-
-    /**
-     * Gets the value of the springPrice property.
-     * 
-     */
-    public double getSpringPrice() {
-        return springPrice;
-    }
-
-    /**
-     * Sets the value of the springPrice property.
-     * 
-     */
-    public void setSpringPrice(double value) {
-        this.springPrice = value;
-    }
-
-    /**
-     * Gets the value of the autumnPrice property.
-     * 
-     */
-    public double getAutumnPrice() {
-        return autumnPrice;
-    }
-
-    /**
-     * Sets the value of the autumnPrice property.
-     * 
-     */
-    public void setAutumnPrice(double value) {
-        this.autumnPrice = value;
+    public double getPrice() {
+        return price;
     }
 
     /**

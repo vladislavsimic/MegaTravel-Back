@@ -54,20 +54,8 @@ public class Property extends BaseEntity {
     private Integer numberOfCancellationDays;
 
     @NotNull
-    @Column(name = "summer_price")
-    private Double summerPrice;
-
-    @NotNull
-    @Column(name = "winter_price")
-    private Double winterPrice;
-
-    @NotNull
-    @Column(name = "spring_price")
-    private Double springPrice;
-
-    @NotNull
-    @Column(name = "autumn_price")
-    private Double autumnPrice;
+    @Column(name = "price")
+    private Double price;
 
     @NotNull
     @ManyToOne

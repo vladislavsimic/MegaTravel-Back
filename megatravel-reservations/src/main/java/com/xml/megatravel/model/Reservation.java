@@ -27,7 +27,6 @@ public class Reservation extends BaseEntity {
     @Column(name = "price")
     private Double price;
 
-    @NotNull
     @ManyToOne
     @JoinColumn(name = "property_id")
     private Property property;
