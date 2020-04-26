@@ -67,7 +67,7 @@ public class UserService {
         final User user = userRepository.findByUsernameOrEmail(request.getUsernameOrEmail())
                 .orElseThrow(() -> new UserNotFoundException("No user with given username or email found!"));
         final String jwt = tokenProvider.generateAuthToken(authentication);
-        return new JwtAuthDto(jwt, user.getRole().toString());
+        return new JwtAuthDto(jwt, user.getRole().toString(), user.getUsername().toString());
     }
 
     @Transactional(rollbackFor = Exception.class)

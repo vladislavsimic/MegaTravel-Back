@@ -50,7 +50,6 @@ public class ImageController {
     }
 
     @PostMapping(value = "/properties/{id}")
-    @PreAuthorize("hasAuthority('AGENT')")
     public ResponseEntity<ImageResponse> uploadPropertyImage(@PathVariable("id") UUID propertyId,
                                                              @Valid @RequestParam(name = "image") MultipartFile image) {
         // TODO: remove this endpoint once images tested and working
@@ -61,7 +60,6 @@ public class ImageController {
     }
 
     @PostMapping(value = "/properties/{id}/many")
-    @PreAuthorize("hasAuthority('AGENT')")
     public ResponseEntity<List<ImageResponse>> uploadPropertyImages(@PathVariable("id") UUID propertyId,
                                                                     @Valid @RequestParam(name = "images") List<MultipartFile> images) {
         final Property property = propertyService.getProperty(propertyId);
